@@ -1,8 +1,8 @@
 let canvasWidth = 800;
 let canvasHeight = 800;
-let rotationSpeed = 2.60;
+let rotationSpeed = 1.60;
 let flashThreshold = 2.90;
-let flashSpeed = 30;
+let flashSpeed = 40;
 let flashColor;
 let bgColor;
 
@@ -22,8 +22,9 @@ function setup() {
 }
 
 function draw() {
-  // Dynamic background color based on mouse position
-  bgColor = lerpColor(color(240, 240, 240), color(100, 100, 255), map(mouseX, 0, width, 0, 1));
+  // Dynamic background color based on noise
+  let noiseVal = noise(frameCount * 0.01);
+  bgColor = lerpColor(color(240, 240, 240), color(13, 100, 255), noiseVal)
 
   background(bgColor);
 
@@ -50,8 +51,8 @@ function draw() {
   }
 
   // Update the color with a smooth transition for text
-  textColor = lerpColor(color(255, 0, 0), color(0, 0, 255), sin(frameCount * 0.02));
-
+  let textHue = (frameCount * 0.5) % 360;
+  textColor = color('hsb(' + textHue + ', 100%, 100%)');
   fill(textColor);
 
   // Dynamic font size based on mouseY
